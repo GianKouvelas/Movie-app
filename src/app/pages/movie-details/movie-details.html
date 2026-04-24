@@ -1,1 +1,33 @@
-<p>movie-details works!</p>
+<div style="padding: 20px;" *ngIf="movie">
+  <h2>{{ movie.title }}</h2>
+  
+  <div style="display: flex; gap: 20px;">
+    <img 
+      *ngIf="movie.poster_path"
+      [src]="'https://image.tmdb.org/t/p/w200' + movie.poster_path"
+      [alt]="movie.title"
+      style="width: 150px; height: 225px; object-fit: cover;"
+    />
+    
+    <div>
+      <p><strong>Overview:</strong> {{ movie.overview }}</p>
+      <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+      <p><strong>Rating:</strong> {{ movie.vote_average }} ({{ movie.vote_count }} votes)</p>
+      <p><strong>Budget:</strong> ${{ movie.budget | number }}</p>
+      <p><strong>Revenue:</strong> ${{ movie.revenue | number }}</p>
+      <p><strong>Languages:</strong> 
+        {{ movie.spoken_languages | json }}
+      </p>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px;" *ngIf="!ratingSubmitted">
+    <h3>Rate this movie</h3>
+    <input type="number" [(ngModel)]="rating" min="1" max="10" />
+    <button (click)="submitRating()">Submit Rating</button>
+  </div>
+  
+  <p *ngIf="ratingSubmitted" style="color: green;">✅ Rating submitted!</p>
+
+  <button (click)="close()" style="margin-top: 20px;">Close</button>
+</div>
