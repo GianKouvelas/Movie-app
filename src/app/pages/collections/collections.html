@@ -1,1 +1,24 @@
-<p>collections works!</p>
+<div style="padding: 20px;">
+  <button (click)="goBack()">← Back to Search</button>  
+  <h1>🎞️ My Collections</h1>
+
+  <button (click)="showCreateForm = !showCreateForm">+ New Collection</button>
+
+  <div *ngIf="showCreateForm" style="margin-top: 16px;">
+    <input [(ngModel)]="newTitle" placeholder="Title" style="display:block; margin-bottom: 8px; padding: 8px;"/>
+    <input [(ngModel)]="newDescription" placeholder="Description" style="display:block; margin-bottom: 8px; padding: 8px;"/>
+    <button (click)="createCollection()">Create</button>
+  </div>
+
+  <div *ngIf="collections.length === 0" style="margin-top: 20px;">
+    <p>No collections yet. Create one!</p>
+  </div>
+
+  <div *ngFor="let collection of collections" 
+       (click)="goToCollection(collection.id)"
+       style="margin-top: 16px; padding: 16px; border: 1px solid #ccc; cursor: pointer; border-radius: 8px;">
+    <h3>{{ collection.title }}</h3>
+    <p>{{ collection.description }}</p>
+    <p>{{ collection.movies.length }} movies</p>
+  </div>
+</div>

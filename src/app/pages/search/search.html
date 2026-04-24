@@ -7,25 +7,32 @@
       placeholder="Search movies (min 3 characters)..."
       style="width: 300px; padding: 8px; font-size: 16px;"
     />
-    <button (click)="onSearch()" style="padding: 8px 16px; margin-left: 8px;">
-      Search
-    </button>
+    <button (click)="onSearch()" style="padding: 8px 16px; margin-left: 8px;">Search</button>
+    <a routerLink="/collections" style="margin-left: 16px;">My Collections</a>
+  </div>
+
+  <div *ngIf="selectedMovies.length > 0" style="margin-top: 16px;">
+    <button (click)="openAddToCollection()">➕ Add {{ selectedMovies.length }} movie(s) to Collection</button>
   </div>
 
   <div *ngIf="loading">Loading...</div>
 
   <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 20px;">
-    <div *ngFor="let movie of movies" 
-         (click)="openMovieDetails(movie.id)"
-         style="width: 150px; cursor: pointer; text-align: center;">
+    <div *ngFor="let movie of movies"
+         style="width: 150px; text-align: center; cursor: pointer;"
+         [style.border]="isSelected(movie) ? '3px solid blue' : '3px solid transparent'">
       <img 
         *ngIf="movie.poster_path"
         [src]="'https://image.tmdb.org/t/p/w200' + movie.poster_path" 
         [alt]="movie.title"
+        (click)="openMovieDetails(movie.id)"
         style="width: 150px; height: 225px; object-fit: cover;"
       />
       <p style="font-weight: bold;">{{ movie.title }}</p>
       <p>⭐ {{ movie.vote_average | number:'1.1-1' }}</p>
+      <button (click)="toggleSelect(movie)">
+        {{ isSelected(movie) ? '✅ Selected' : 'Select' }}
+      </button>
     </div>
   </div>
 
@@ -34,6 +41,4 @@
     <span style="margin: 0 16px;">Page {{ currentPage }} of {{ totalPages }}</span>
     <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
   </div>
-  
-  
 </div>

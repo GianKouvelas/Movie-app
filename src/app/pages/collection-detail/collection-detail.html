@@ -1,0 +1,25 @@
+<div style="padding: 20px;">
+  <button (click)="goBack()">← Back</button>
+
+  <div *ngIf="collection">
+    <h1>{{ collection.title }}</h1>
+    <p>{{ collection.description }}</p>
+
+    <div *ngIf="collection.movies.length === 0">
+      <p>No movies in this collection yet.</p>
+    </div>
+
+    <div *ngFor="let movie of collection.movies"
+         style="display:flex; align-items:center; gap:16px; margin-top:16px; border:1px solid #d20000; padding:8px; border-radius:8px;">
+      <img *ngIf="movie.poster_path"
+           [src]="'https://image.tmdb.org/t/p/w92' + movie.poster_path"
+           style="width:60px;"/>
+      <div style="flex:1">
+        <p style="font-weight:bold;">{{ movie.title }}</p>
+        <p>⭐ {{ movie.vote_average }}</p>
+      </div>
+      <button (click)="openMovieDetails(movie.id)">Details</button>
+      <button (click)="removeMovie(movie.id)">Remove</button>
+    </div>
+  </div>
+</div>

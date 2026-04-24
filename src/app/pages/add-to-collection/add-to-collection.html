@@ -1,0 +1,16 @@
+<div style="padding: 20px;">
+  <h2>Add to Collection</h2>
+
+  <div *ngIf="collections.length === 0">
+    <p>No collections yet. Create one first!</p>
+  </div>
+
+  <div *ngFor="let collection of collections"
+       (click)="addToCollection(collection)"
+       style="padding: 16px; border: 1px solid #ccc; margin-top: 8px; cursor: pointer; border-radius: 8px;">
+    <h3>{{ collection.title }}</h3>
+    <p>{{ collection.movies.length }} movies</p>
+  </div>
+
+  <button (click)="close()" style="margin-top: 16px;">Cancel</button>
+</div>

@@ -4,10 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Movie } from '../../services/movie';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MovieDetails } from '../movie-details/movie-details';
+import { AddToCollection } from '../add-to-collection/add-to-collection';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-search',
-  imports: [CommonModule, FormsModule, MatDialogModule],
+  imports: [CommonModule, FormsModule, MatDialogModule, RouterModule],
   templateUrl: './search.html',
   styleUrl: './search.css'
 })
@@ -17,6 +19,7 @@ export class Search {
   currentPage = 1;
   totalPages = 1;
   loading = false;
+  selectedMovies: any[] = [];
 
   constructor(private movieService: Movie, private dialog: MatDialog) {}
 
@@ -41,10 +44,30 @@ export class Search {
     });
   }
 
+  toggleSelect(movie: any) {
+    const index = this.selectedMovies.findIndex(m => m.id === movie.id);
+    if (index === -1) {
+      this.selectedMovies.push(movie);
+    } else {
+      this.selectedMovies.splice(index, 1);
+    }
+  }
+
+  isSelected(movie: any): boolean {
+    return this.selectedMovies.some(m => m.id === movie.id);
+  }
+
   openMovieDetails(movieId: number) {
     this.dialog.open(MovieDetails, {
       data: { movieId },
       width: '600px'
+    });
+  }
+
+  openAddToCollection() {
+    this.dialog.open(AddToCollection, {
+      data: { movies: this.selectedMovies },
+      width: '400px'
     });
   }
 
