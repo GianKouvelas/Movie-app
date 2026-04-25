@@ -6,10 +6,11 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MovieDetails } from '../movie-details/movie-details';
 import { AddToCollection } from '../add-to-collection/add-to-collection';
 import { RouterModule } from '@angular/router';
+import { SearchValidator } from '../../directives/search-validator';
 
 @Component({
   selector: 'app-search',
-  imports: [CommonModule, FormsModule, MatDialogModule, RouterModule],
+  imports: [CommonModule, FormsModule, MatDialogModule, RouterModule, SearchValidator],
   templateUrl: './search.html',
   styleUrl: './search.css'
 })
@@ -25,6 +26,7 @@ export class Search {
 
   onSearch() {
     if (this.searchQuery.length < 3) return;
+    if (!/^[a-zA-Z0-9 ]*$/.test(this.searchQuery)) return;
     this.currentPage = 1;
     this.fetchMovies();
   }

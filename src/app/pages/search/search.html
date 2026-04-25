@@ -2,11 +2,22 @@
   <h1>🎬 Movie Search</h1>
   
   <div>
-    <input 
-      [(ngModel)]="searchQuery" 
-      placeholder="Search movies (min 3 characters)..."
-      style="width: 300px; padding: 8px; font-size: 16px;"
-    />
+    <div style="position: relative; display: inline-block;">
+      <input 
+        [(ngModel)]="searchQuery" 
+        name="searchQuery"
+        appSearchValidator
+        #searchInput="ngModel"
+        placeholder="Search movies (min 3 characters)..."
+        style="width: 300px; padding: 8px; font-size: 16px;"
+      />
+      <div *ngIf="searchInput.errors?.['minLength']" style="color: red; position: absolute; font-size: 12px;">
+        Minimum 3 characters required
+      </div>
+      <div *ngIf="searchInput.errors?.['alphanumeric']" style="color: red; position: absolute; font-size: 12px;">
+        Only letters and numbers allowed
+      </div>
+    </div>
     <button (click)="onSearch()" style="padding: 8px 16px; margin-left: 8px;">Search</button>
     <a routerLink="/collections" style="margin-left: 16px;">My Collections</a>
   </div>
@@ -41,4 +52,6 @@
     <span style="margin: 0 16px;">Page {{ currentPage }} of {{ totalPages }}</span>
     <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
   </div>
+
+  
 </div>
