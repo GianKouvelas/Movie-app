@@ -1,4 +1,4 @@
-<div style="padding: 20px;">
+<div style="padding: 20px; text-align: center;">
   <h1>🎬 Movie Search</h1>
   
   <div>
@@ -8,7 +8,8 @@
         name="searchQuery"
         appSearchValidator
         #searchInput="ngModel"
-        placeholder="Search movies (min 3 characters)..."
+        placeholder="Search movies "
+        (keyup.enter)="onSearch()"
         style="width: 300px; padding: 8px; font-size: 16px;"
       />
       <div *ngIf="searchInput.errors?.['minLength']" style="color: red; position: absolute; font-size: 12px;">
