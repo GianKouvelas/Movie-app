@@ -15,10 +15,12 @@
   </div>
 
   <div *ngFor="let collection of collections" 
-       (click)="goToCollection(collection.id)"
-       style="margin-top: 16px; padding: 16px; border: 1px solid #ccc; cursor: pointer; border-radius: 8px;">
-    <h3>{{ collection.title }}</h3>
-    <p>{{ collection.description }}</p>
-    <p>{{ collection.movies.length }} movies</p>
+      style="margin-top: 16px; padding: 16px; border: 1px solid #ccc; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+    <div (click)="goToCollection(collection.id)" style="cursor: pointer; flex: 1;">
+      <h3>{{ collection.title }}</h3>
+      <p>{{ collection.description }}</p>
+      <p>{{ collection.movies.length }} movies</p>
+    </div>
+    <button (click)="deleteCollection(collection.id)" style="color: red;">🗑️ Delete</button>
   </div>
 </div>

@@ -57,4 +57,10 @@ export class Collections {
   goToCollection(id: number) {
     this.router.navigate(['/collections', id]);
   }
+
+  // Deletes a collection
+  deleteCollection(id: number) {
+  this.collections = this.collections.filter((c: any) => c.id !== id);
+  this.saveCollections();
+}
 }
